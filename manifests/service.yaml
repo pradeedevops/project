@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-node-app-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: node-app
+  template:
+    metadata:
+      labels:
+        app: node-app
+    spec:
+      containers:
+      - name: node-app
+        image: pradeepaanandh/trial:latest
+        ports:
+        - containerPort: 3000
+
+root@ip-172-31-37-164:~/CICD/manifests# cat service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  type: NodePort
+  ports:
+    - port: 80       # The port the service is exposed on
+      targetPort: 3000  # The port your application is listening on
+  selector:
+    app: node-app
+

@@ -67,6 +67,7 @@ pipeline {
         stage('Apply Kubernetes Manifests & Sync App with ArgoCD') {
             steps {
                 script {
+                  kubeconfig(credentialsId: 'kubeconfig', serverUrl: 'https://192.168.49.2:8443') 
                     sh '''
                         echo "synchronizing app with ArgoCD..."
                         ARGOCD_PASS=$(kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)

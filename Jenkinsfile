@@ -13,8 +13,9 @@ pipeline {
     stages {
         stage('Checkout Github') {
             steps {
-                git branch: 'main', credentialsId: 'Gitops-token-github', url: 'https://github.com/pradeedevops/project.git'
+                git branch: 'main', credentialsId: 'Gitops-token-Github', url: 'https://github.com/pradeedevops/project.git'
             }
+ 
         }
 
         stage('Install node dependencies') {

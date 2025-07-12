@@ -29,46 +29,47 @@ app.get('/', (req, res) => {
           text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
         }
 
-        img {
-          width: 120px;
-          height: auto;
-          margin-top: 20px;
-        }
-
         button {
           margin-top: 30px;
           padding: 12px 24px;
           font-size: 1em;
-          background-color: #fff;
-          color: #007cf0;
+          font-weight: bold;
+          color: #4a00e0;
+          background-color: white;
           border: none;
           border-radius: 8px;
           cursor: pointer;
-          transition: transform 0.2s ease;
+          transition: background 0.3s ease;
         }
 
         button:hover {
-          transform: scale(1.05);
+          background-color: #e6e6e6;
         }
 
-        p {
-          margin-top: 15px;
+        ul {
+          margin-top: 20px;
+          list-style: none;
+          padding: 0;
+          display: none;
+        }
+
+        ul li {
           font-size: 1.2em;
+          margin: 10px 0;
         }
       </style>
     </head>
     <body>
       <h1>Welcome to Clickops Technologies</h1>
-      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIUlEQVQoU2NkQAP/Gf4zIwMjI4P///wPDAwMDAwPz/AAAjWwP/jfHciAAAAABJRU5ErkJggg==" alt="" />
-
-      <button onclick="incrementCounter()">Click Me</button>
-      <p id="counter">You clicked 0 times</p>
-
+      <button onclick="showCourses()">Courses Available</button>
+      <ul id="courses">
+        <li>DevOps Architect Program</li>
+        <li>DevSecOps Architect Program</li>
+        <li>CloudOps Architect Program</li>
+      </ul>
       <script>
-        let count = 0;
-        function incrementCounter() {
-          count++;
-          document.getElementById('counter').innerText = 'You clicked ' + count + ' times';
+        function showCourses() {
+          document.getElementById('courses').style.display = 'block';
         }
       </script>
     </body>
@@ -77,6 +78,6 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(\`Server running on port \${port}\`);
+  console.log(`Server running on port ${port}`);
 });
 

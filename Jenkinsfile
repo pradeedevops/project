@@ -15,23 +15,12 @@ pipeline {
             steps {
                 git branch: 'main', credentialsId: 'Gitops-token-Github', url: 'https://github.com/pradeedevops/project.git'
             }
-        }
-
-        stage('Pause after Checkout') {
-            steps {
-                input message: "Continue after Checkout Github?"
-            }
+ 
         }
 
         stage('Install node dependencies') {
             steps {
                 sh 'npm install'
-            }
-        }
-
-        stage('Pause after Install') {
-            steps {
-                input message: "Continue after Installing dependencies?"
             }
         }
 
@@ -44,21 +33,9 @@ pipeline {
             }
         }
 
-        stage('Pause after Build') {
-            steps {
-                input message: "Continue after Docker Build?"
-            }
-        }
-
         stage('Trivy Scan') {
             steps {
                 sh 'trivy image --severity HIGH,CRITICAL --no-progress --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest'
-            }
-        }
-
-        stage('Pause after Trivy Scan') {
-            steps {
-                input message: "Continue after Trivy Scan?"
             }
         }
 
@@ -70,12 +47,6 @@ pipeline {
                         dockerImage.push('latest')
                     }
                 }
-            }
-        }
-
-        stage('Pause after Push') {
-            steps {
-                input message: "Continue after pushing Docker image?"
             }
         }
 
@@ -93,31 +64,19 @@ pipeline {
             }
         }
 
-        stage('Pause after Install CLI') {
-            steps {
-                input message: "Continue after installing kubectl and ArgoCD CLI?"
-            }
-        }
-
         stage('Apply Kubernetes Manifests & Sync App with ArgoCD') {
             steps {
                 script {
-                    withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_FILE')]) {
-                        sh '''
-                            export KUBECONFIG=$KUBECONFIG_FILE
-                            echo "synchronizing app with ArgoCD..."
-                            ARGOCD_PASS=$(kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
-                            argocd login 3.110.215.205:30368 --username admin --password $ARGOCD_PASS --insecure
-                            argocd app sync argocdjenkins
-                        '''
-                    } 
+                   withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_FILE')]) {
+                    sh '''
+                        export KUBECONFIG=$KUBECONFIG_FILE
+                        echo "synchronizing app with ArgoCD..."
+                        ARGOCD_PASS=$(kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
+                        argocd login 3.110.215.205:30368 --username admin --password $ARGOCD_PASS --insecure
+                        argocd app sync argocdjenkins
+                    '''
+                  } 
                 }
-            }
-        }
-
-        stage('Pause after ArgoCD Sync') {
-            steps {
-                input message: "Continue after ArgoCD app sync?"
             }
         }
     }
@@ -131,4 +90,3 @@ pipeline {
         }
     }
 }
-

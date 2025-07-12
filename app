@@ -34,49 +34,17 @@ app.get('/', (req, res) => {
           height: auto;
           margin-top: 20px;
         }
-
-        button {
-          margin-top: 30px;
-          padding: 12px 24px;
-          font-size: 1em;
-          background-color: #fff;
-          color: #007cf0;
-          border: none;
-          border-radius: 8px;
-          cursor: pointer;
-          transition: transform 0.2s ease;
-        }
-
-        button:hover {
-          transform: scale(1.05);
-        }
-
-        p {
-          margin-top: 15px;
-          font-size: 1.2em;
-        }
       </style>
     </head>
     <body>
       <h1>Welcome to Clickops Technologies</h1>
       <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIUlEQVQoU2NkQAP/Gf4zIwMjI4P///wPDAwMDAwPz/AAAjWwP/jfHciAAAAABJRU5ErkJggg==" alt="" />
-
-      <button onclick="incrementCounter()">Click Me</button>
-      <p id="counter">You clicked 0 times</p>
-
-      <script>
-        let count = 0;
-        function incrementCounter() {
-          count++;
-          document.getElementById('counter').innerText = 'You clicked ' + count + ' times';
-        }
-      </script>
     </body>
     </html>
   `);
 });
 
 app.listen(port, () => {
-  console.log(\`Server running on port \${port}\`);
+  console.log(`Server running on port ${port}`);
 });
 

@@ -66,7 +66,6 @@ app.get('/', (req, res) => {
         <li>DevOps Architect Program</li>
         <li>DevSecOps Architect Program</li>
         <li>CloudOps Architect Program</li>
-	<li>AWS Cloud Practitioner</li>
       </ul>
       <script>
         function showCourses() {
